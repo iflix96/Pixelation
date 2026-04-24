@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixelation 🔍</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── AUTH SCREEN ──────────────────────────────────────── -->
+  <div id="auth-screen" class="screen active">
+    <div class="auth-bg"></div>
+    <div class="auth-card">
+      <div class="logo">
+        <span class="logo-icon">🔍</span>
+        <h1 class="logo-text">Pixelation</h1>
+        <p class="logo-sub">Real-Time Multiplayer Image Guessing</p>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="register">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form active">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="login-username" placeholder="Enter your username" autocomplete="username" />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" />
+        </div>
+        <button class="btn-primary" id="login-btn">Play Now 🎮</button>
+        <p class="auth-error" id="login-error"></p>
+      </div>
+
+      <!-- Register Form -->
+      <div id="register-form" class="auth-form">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" id="reg-username" placeholder="Choose a username" autocomplete="username" />
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="reg-password" placeholder="Choose a password (6+ chars)" autocomplete="new-password" />
+        </div>
+        <button class="btn-primary" id="register-btn">Create Account 🚀</button>
+        <p class="auth-error" id="reg-error"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GAME SCREEN ───────────────────────────────────────── -->
+  <div id="game-screen" class="screen">
+
+    <!-- Header -->
+    <header class="game-header">
+      <div class="header-logo">🔍 <span>Pixelation</span></div>
+      <div class="header-info">
+        <span id="round-label" class="round-badge">Round 1</span>
+        <span id="player-count" class="player-count">👤 1 player</span>
+        <span id="header-username" class="header-user"></span>
+        <button class="btn-logout" id="logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+
+      <!-- Left: Image Panel -->
+      <section class="image-panel">
+        <div class="image-wrapper">
+          <canvas id="game-canvas"></canvas>
+          <div id="round-overlay" class="round-overlay hidden">
+            <div class="overlay-content">
+              <div class="overlay-icon" id="overlay-icon">⏳</div>
+              <div class="overlay-title" id="overlay-title">Get Ready!</div>
+              <div class="overlay-answer" id="overlay-answer"></div>
+            </div>
+            <div id="overlay-leaderboard" class="overlay-leaderboard hidden"></div>
+          </div>
+          <div id="gameOverScreen" class="round-overlay hidden" style="z-index: 100;">
+            <div class="overlay-content">
+              <div class="overlay-icon">🏁</div>
+              <div class="overlay-title">Game Over!</div>
+              <div class="overlay-answer">Final scores are in the leaderboard</div>
+              <button class="btn-primary" id="playAgainBtn" style="margin-top: 20px; font-size: 1rem;">Play Again 🔄</button>
+            </div>
+        </div>
+      </div>
+        <div class="image-controls">
+          <button class="btn-hint" id="hint-btn">💡 Hint! <span class="hint-sub">(reveal more)</span></button>
+          <div class="pixel-indicator">
+            <span>Clarity</span>
+            <div class="pixel-bar-wrap">
+              <div class="pixel-bar" id="pixel-bar"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+      <!-- Right: Chat + Leaderboard -->
+      <aside class="side-panel">
+        <!-- Leaderboard -->
+        <div class="leaderboard-box">
+          <h2 class="side-title">🏆 Leaderboard</h2>
+          <ul id="leaderboard-list" class="leaderboard-list">
+            <li class="lb-empty">Waiting for players…</li>
+          </ul>
+        </div>
+
+        <!-- Chat -->
+        <div class="chat-box">
+          <h2 class="side-title">💬 Guesses & Chat</h2>
+          <div id="chat-messages" class="chat-messages"></div>
+          <div class="chat-input-row">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type your guess or message…"
+              maxlength="100"
+              autocomplete="off"
+            />
+            <button class="btn-send" id="send-btn">Send</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────────── -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/controllers/AuthController.js" type="module"></script>
+  <script src="/js/managers/ClientGameManager.js" type="module"></script>
+  <script src="/js/views/GameView.js" type="module"></script>
+  <script src="/js/views/ChatView.js" type="module"></script>
+  <script src="/js/app.js" type="module"></script>
+</body>
+</html>
